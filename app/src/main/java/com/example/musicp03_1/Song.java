@@ -45,28 +45,4 @@ public class Song {
         return drawable;
     }
 
-    // setter methods
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setArtist(String artist) {
-        this.artist = artist;
-    }
-
-    public void setFileLink(String fileLink) {
-        this.fileLink = fileLink;
-    }
-
-    public void setSongLength(double songLength) {
-        this.songLength = songLength;
-    }
-
-    public void setDrawable(int drawable) {
-        this.drawable = drawable;
-    }
 }

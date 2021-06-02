@@ -1,5 +1,7 @@
 package com.example.musicp03_1;
 
+import android.view.GestureDetector;
+
 public class SongCollection {
 
     // making the song list
@@ -11,7 +13,7 @@ public class SongCollection {
         // Our song objects
         Song theWayYouLookTonight = new Song(
                 "S1001",
-                "1. The Way You Look Tonight",
+                "The Way You Look Tonight",
                 "Michael Buble",
                 "https://p.scdn.co/mp3-preview/a5b8972e764025020625bbf9c1c2bbb06e394a60?cid=2afe87a64b0042dabf51f37318616965",
                 4.66,
@@ -19,7 +21,7 @@ public class SongCollection {
         );
         Song billieJean = new Song(
                 "S1002",
-                "2. Billie Jean",
+                "Billie Jean",
                 "Michael Jackson",
                 "https://p.scdn.co/mp3-preview/f504e6b8e037771318656394f532dede4f9bcaea?cid=2afe87a64b0042dabf51f37318616965",
                 4.99,
@@ -27,7 +29,7 @@ public class SongCollection {
         );
         Song one = new Song(
                 "S1003",
-                "3. One",
+                "One",
                 "Ed Sheeran",
                 "https://p.scdn.co/mp3-preview/daa8679253ba20620db6e1db9c88edfcf1f4069f?cid=2afe87a64b0042dabf51f37318616965",
                 4.21,
@@ -40,7 +42,7 @@ public class SongCollection {
         songs[2] = one;
     }
 
-    // method to find element in song list(array)
+    // method to find Song instance in songs     list(array)
     public int searchSongById(String id) {
         for (int i = 0; i < songs.length; i++) {
             Song tempSong = songs[i];
@@ -49,5 +51,9 @@ public class SongCollection {
             }
         }
         return -1;
+    }
+
+    public Song getCurrentSong(int currentSongId){
+        return songs[currentSongId];
     }
 }

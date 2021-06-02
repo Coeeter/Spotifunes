@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PlaySongActivity">
+
+    <ImageView
+        android:id="@+id/imgCoverArt"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.22"
+        app:srcCompat="@drawable/home" />
+
+    <TextView
+        android:id="@+id/txtSongTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Song Title"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/imgCoverArt"
+        app:layout_constraintStart_toStartOf="@+id/imgCoverArt"
+        app:layout_constraintTop_toBottomOf="@+id/imgCoverArt" />
+
+    <TextView
+        android:id="@+id/txtArtist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Artist"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/txtSongTitle"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="@+id/txtSongTitle"
+        app:layout_constraintTop_toBottomOf="@+id/txtSongTitle" />
+
+    <Button
+        android:id="@+id/btnPrevious"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="210dp"
+        android:text="PREV"
+        app:layout_constraintStart_toStartOf="@+id/imgCoverArt"
+        app:layout_constraintTop_toBottomOf="@+id/imgCoverArt" />
+
+    <Button
+        android:id="@+id/btnPlayPause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PLAY"
+        app:layout_constraintEnd_toEndOf="@+id/imgCoverArt"
+        app:layout_constraintStart_toStartOf="@+id/imgCoverArt"
+        app:layout_constraintTop_toTopOf="@+id/btnPrevious" />
+
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NEXT"
+        app:layout_constraintEnd_toEndOf="@+id/imgCoverArt"
+        app:layout_constraintTop_toTopOf="@+id/btnPlayPause" />
+</androidx.constraintlayout.widget.ConstraintLayout>
