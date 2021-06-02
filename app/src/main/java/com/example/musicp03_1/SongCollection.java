@@ -5,7 +5,7 @@ import android.view.GestureDetector;
 public class SongCollection {
 
     // making the song list
-    private Song[] songs = new Song[3];
+    private Song[] songs = new Song[4];
 
     // constructor method
     public SongCollection() {
@@ -35,11 +35,22 @@ public class SongCollection {
                 4.21,
                 R.drawable.photograph
         );
+        Song unravel = new Song(
+                "S1004",
+                "Unravel",
+                "TK from Ling tosite sigure",
+                "https://p.scdn.co/mp3-preview/7b56a38dfc7ae953db793b2dfd4ec110828a0455?cid=2afe87a64b0042dabf51f37318616965",
+                //"https://soundcloud.com/marcobofficial/tky-ghl-unravel-marco-b-remix",
+                //"https://www.youtube.com/watch?v=zmzPhm9wpdQ",
+                //"C:\\Users\\nasru\\Music\\Anime Music\\Unravel.mp3",
+                4.01,
+                R.drawable.unravel);
 
         //inputting into the list
         songs[0] = theWayYouLookTonight;
         songs[1] = billieJean;
         songs[2] = one;
+        songs[3] = unravel;
     }
 
     // method to find Song instance in songs     list(array)

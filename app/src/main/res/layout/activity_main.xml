@@ -100,4 +100,34 @@
         app:layout_constraintBottom_toBottomOf="@+id/S1003"
         app:layout_constraintStart_toStartOf="@+id/txtTitle3" />
 
+    <ImageButton
+        android:id="@+id/S1004"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="30dp"
+        android:scaleType="centerCrop"
+        android:onClick="handleSelection"
+        app:layout_constraintStart_toStartOf="@+id/S1003"
+        app:layout_constraintTop_toBottomOf="@+id/S1003"
+        app:srcCompat="@drawable/unravel" />
+
+    <TextView
+        android:id="@+id/txtTitle4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="Unravel"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/S1004"
+        app:layout_constraintTop_toTopOf="@+id/S1004" />
+
+    <TextView
+        android:id="@+id/txtArtist4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TK from Ling tosite sigure"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/S1004"
+        app:layout_constraintStart_toStartOf="@+id/txtTitle4" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

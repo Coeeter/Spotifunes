@@ -56,7 +56,8 @@
         android:id="@+id/btnPlayPause"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="PLAY"
+        android:onClick="playOrPauseMusic"
+        android:text="PAUSE"
         app:layout_constraintEnd_toEndOf="@+id/imgCoverArt"
         app:layout_constraintStart_toStartOf="@+id/imgCoverArt"
         app:layout_constraintTop_toTopOf="@+id/btnPrevious" />
