@@ -9,6 +9,7 @@ public class Song {
     private String fileLink;
     private double songLength;
     private int drawable;
+    public int resid;
 
     //constructor
     public Song(String id, String title, String artist, String fileLink, double songLength, int drawable) {
@@ -45,4 +46,10 @@ public class Song {
         return drawable;
     }
 
+    public int getResid() {
+        if(!(resid == 0)) {
+            return resid;
+        }
+        return -1;
+    }
 }

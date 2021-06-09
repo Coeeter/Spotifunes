@@ -48,6 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="210dp"
+        android:onClick="prevMusic"
         android:text="PREV"
         app:layout_constraintStart_toStartOf="@+id/imgCoverArt"
         app:layout_constraintTop_toBottomOf="@+id/imgCoverArt" />
@@ -66,7 +67,39 @@
         android:id="@+id/btnNext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="nextMusic"
         android:text="NEXT"
         app:layout_constraintEnd_toEndOf="@+id/imgCoverArt"
         app:layout_constraintTop_toTopOf="@+id/btnPlayPause" />
+
+    <SeekBar
+        android:id="@+id/songSeekBar"
+        android:layout_width="290dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="20dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/imgCoverArt"
+        app:layout_constraintStart_toStartOf="@+id/imgCoverArt"
+        app:layout_constraintTop_toBottomOf="@+id/txtSongTitle" />
+
+    <TextView
+        android:id="@+id/songProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0:00"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/songSeekBar"
+        app:layout_constraintTop_toTopOf="@+id/songSeekBar" />
+
+    <TextView
+        android:id="@+id/songDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0:00"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/songSeekBar"
+        app:layout_constraintTop_toTopOf="@+id/songSeekBar" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

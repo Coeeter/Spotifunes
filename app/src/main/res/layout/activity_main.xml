@@ -4,7 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/imgBg1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/minimalist" />
 
     <ImageButton
         android:id="@+id/S1001"
@@ -25,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:text="The Way You Look Tonight"
+        android:textColor="#FFFFFF"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/S1001"
         app:layout_constraintTop_toTopOf="@+id/S1001" />
@@ -34,6 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Michael Buble"
+        android:textColor="#FFFFFF"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/S1001"
         app:layout_constraintStart_toStartOf="@+id/txtTitle1" />
@@ -43,8 +57,8 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginTop="30dp"
-        android:scaleType="centerCrop"
         android:onClick="handleSelection"
+        android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="@+id/S1001"
         app:layout_constraintTop_toBottomOf="@+id/S1001"
         app:srcCompat="@drawable/billie_jean" />
@@ -55,6 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:text="Billie Jean"
+        android:textColor="#FFFFFF"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/S1002"
         app:layout_constraintTop_toTopOf="@+id/S1002" />
@@ -65,6 +80,7 @@
         android:layout_height="15dp"
         android:layout_marginTop="20dp"
         android:text="Michael Jackson"
+        android:textColor="#FFFFFF"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/S1002"
         app:layout_constraintStart_toStartOf="@+id/txtTitle2"
@@ -75,8 +91,8 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginTop="30dp"
-        android:scaleType="centerCrop"
         android:onClick="handleSelection"
+        android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="@+id/S1002"
         app:layout_constraintTop_toBottomOf="@+id/S1002"
         app:srcCompat="@drawable/photograph" />
@@ -87,6 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:text="One"
+        android:textColor="#FFFFFF"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/S1003"
         app:layout_constraintTop_toTopOf="@+id/S1003" />
@@ -96,6 +113,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ed Sheeran"
+        android:textColor="#FFFFFF"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/S1003"
         app:layout_constraintStart_toStartOf="@+id/txtTitle3" />
@@ -105,8 +123,8 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginTop="30dp"
-        android:scaleType="centerCrop"
         android:onClick="handleSelection"
+        android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="@+id/S1003"
         app:layout_constraintTop_toBottomOf="@+id/S1003"
         app:srcCompat="@drawable/unravel" />
@@ -117,6 +135,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:text="Unravel"
+        android:textColor="#FFFFFF"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/S1004"
         app:layout_constraintTop_toTopOf="@+id/S1004" />
@@ -126,8 +145,44 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TK from Ling tosite sigure"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/S1004"
         app:layout_constraintStart_toStartOf="@+id/txtTitle4" />
+
+    <ImageButton
+        android:id="@+id/S1005"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="30dp"
+        android:onClick="handleSelection"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@+id/S1004"
+        app:layout_constraintTop_toBottomOf="@+id/S1004"
+        app:srcCompat="@drawable/aimer" />
+
+    <TextView
+        android:id="@+id/txtTitle5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="I beg you"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/S1005"
+        app:layout_constraintTop_toTopOf="@+id/S1005" />
+
+    <TextView
+        android:id="@+id/txtArtist5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Aimer"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/S1005"
+        app:layout_constraintStart_toStartOf="@+id/txtTitle5" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,7 @@ import android.view.GestureDetector;
 public class SongCollection {
 
     // making the song list
-    private Song[] songs = new Song[4];
+    private Song[] songs = new Song[5];
 
     // constructor method
     public SongCollection() {
@@ -39,21 +39,32 @@ public class SongCollection {
                 "S1004",
                 "Unravel",
                 "TK from Ling tosite sigure",
-                "https://p.scdn.co/mp3-preview/7b56a38dfc7ae953db793b2dfd4ec110828a0455?cid=2afe87a64b0042dabf51f37318616965",
-                //"https://soundcloud.com/marcobofficial/tky-ghl-unravel-marco-b-remix",
-                //"https://www.youtube.com/watch?v=zmzPhm9wpdQ",
-                //"C:\\Users\\nasru\\Music\\Anime Music\\Unravel.mp3",
+                //"https://p.scdn.co/mp3-preview/7b56a38dfc7ae953db793b2dfd4ec110828a0455?cid=2afe87a64b0042dabf51f37318616965",
+                "",
                 4.01,
-                R.drawable.unravel);
+                R.drawable.unravel
+        );
+        unravel.resid = R.raw.unravel;
+        Song IBegYou = new Song(
+                "S1005",
+                "I beg you",
+                "Aimer",
+                //"https://p.scdn.co/mp3-preview/b9d60ae62427c81e4d9cf071016fb091f0740676?cid=2afe87a64b0042dabf51f37318616965",
+                "",
+                4.21,
+                R.drawable.aimer
+        );
+        IBegYou.resid = R.raw.i_beg_you;
 
         //inputting into the list
         songs[0] = theWayYouLookTonight;
         songs[1] = billieJean;
         songs[2] = one;
         songs[3] = unravel;
+        songs[4] = IBegYou;
     }
 
-    // method to find Song instance in songs     list(array)
+    // method to find Song instance in songs list(array)
     public int searchSongById(String id) {
         for (int i = 0; i < songs.length; i++) {
             Song tempSong = songs[i];
@@ -66,5 +77,9 @@ public class SongCollection {
 
     public Song getCurrentSong(int currentSongId){
         return songs[currentSongId];
+    }
+
+    public Song[] getSongs() {
+        return songs;
     }
 }
