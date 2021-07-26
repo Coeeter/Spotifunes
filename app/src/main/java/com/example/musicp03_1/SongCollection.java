@@ -2,10 +2,13 @@ package com.example.musicp03_1;
 
 import android.view.GestureDetector;
 
+import java.util.ArrayList;
+
 public class SongCollection {
 
     // making the song list
-    private Song[] songs = new Song[5];
+    public Song[] songs = new Song[5];
+
 
     // constructor method
     public SongCollection() {
@@ -44,7 +47,7 @@ public class SongCollection {
                 4.01,
                 R.drawable.unravel
         );
-        unravel.resid = R.raw.unravel;
+        unravel.resid = R.raw.unravel_2;
         Song IBegYou = new Song(
                 "S1005",
                 "I beg you",
@@ -75,11 +78,15 @@ public class SongCollection {
         return -1;
     }
 
-    public Song getCurrentSong(int currentSongId){
-        return songs[currentSongId];
+    public Song getCurrentSong(int index){
+        return songs[index];
     }
 
     public Song[] getSongs() {
         return songs;
+    }
+
+    public void setSongs(Song[] songs) {
+        this.songs = songs;
     }
 }

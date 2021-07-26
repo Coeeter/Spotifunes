@@ -1,19 +1,28 @@
  package com.example.musicp03_1;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.solver.state.ConstraintReference;
 
 import android.content.Intent;
+import android.graphics.drawable.Animatable;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+ public class MainActivity extends AppCompatActivity {
 
     SongCollection songCollection = new SongCollection();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setContentView(R.layout.activity_main);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
     }
 
     public void sendDataToActivity(int index){
@@ -28,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         int currentArrayIndex = songCollection.searchSongById(resourceId);
         Log.d("poly","The array index is " + currentArrayIndex);*/
         String resourceId = getResources().getResourceEntryName(view.getId());
-        int currentArrayIndex = songCollection.searchSongById(resourceId);
+        int currentArrayIndex = songCollection.searchSongById(resourceId.substring(0,5));
         sendDataToActivity(currentArrayIndex);
     }
     

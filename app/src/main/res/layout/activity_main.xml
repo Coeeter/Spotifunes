@@ -4,26 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="#000000"
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/imgBg1"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:scaleType="center"
+        android:id="@+id/background"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/minimalist" />
+        app:srcCompat="@drawable/background" />
 
     <ImageButton
         android:id="@+id/S1001"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
         android:onClick="handleSelection"
         android:rotationX="360"
         android:scaleType="centerCrop"
@@ -31,158 +31,155 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/michael_buble_collection" />
 
-    <TextView
-        android:id="@+id/txtTitle1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:text="The Way You Look Tonight"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/S1001"
-        app:layout_constraintTop_toTopOf="@+id/S1001" />
+                <TextView
+                    android:id="@+id/txtTitle1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="The Way You Look Tonight"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toEndOf="@+id/S1001"
+                    app:layout_constraintTop_toTopOf="@+id/S1001" />
 
-    <TextView
-        android:id="@+id/txtArtist1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Michael Buble"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/S1001"
-        app:layout_constraintStart_toStartOf="@+id/txtTitle1" />
+                <TextView
+                    android:id="@+id/txtArtist1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Michael Buble"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/S1001"
+                    app:layout_constraintStart_toStartOf="@+id/txtTitle1" />
 
-    <ImageButton
-        android:id="@+id/S1002"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="30dp"
-        android:onClick="handleSelection"
-        android:scaleType="centerCrop"
-        app:layout_constraintStart_toStartOf="@+id/S1001"
-        app:layout_constraintTop_toBottomOf="@+id/S1001"
-        app:srcCompat="@drawable/billie_jean" />
+                <ImageButton
+                    android:id="@+id/S1002"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="30dp"
+                    android:onClick="handleSelection"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintStart_toStartOf="@+id/S1001"
+                    app:layout_constraintTop_toBottomOf="@+id/S1001"
+                    app:srcCompat="@drawable/billie_jean" />
 
-    <TextView
-        android:id="@+id/txtTitle2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:text="Billie Jean"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/S1002"
-        app:layout_constraintTop_toTopOf="@+id/S1002" />
+            <TextView
+                android:id="@+id/txtTitle2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="Billie Jean"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/S1002"
+                app:layout_constraintTop_toTopOf="@+id/S1002" />
 
     <TextView
         android:id="@+id/txtArtist2"
         android:layout_width="109dp"
         android:layout_height="15dp"
-        android:layout_marginTop="20dp"
         android:text="Michael Jackson"
         android:textColor="#FFFFFF"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/S1002"
-        app:layout_constraintStart_toStartOf="@+id/txtTitle2"
-        app:layout_constraintTop_toBottomOf="@+id/txtTitle2" />
+        app:layout_constraintStart_toStartOf="@+id/txtTitle2" />
 
-    <ImageButton
-        android:id="@+id/S1003"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="30dp"
-        android:onClick="handleSelection"
-        android:scaleType="centerCrop"
-        app:layout_constraintStart_toStartOf="@+id/S1002"
-        app:layout_constraintTop_toBottomOf="@+id/S1002"
-        app:srcCompat="@drawable/photograph" />
+                <ImageButton
+                    android:id="@+id/S1003"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="30dp"
+                    android:onClick="handleSelection"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintStart_toStartOf="@+id/S1002"
+                    app:layout_constraintTop_toBottomOf="@+id/S1002"
+                    app:srcCompat="@drawable/photograph" />
 
-    <TextView
-        android:id="@+id/txtTitle3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:text="One"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/S1003"
-        app:layout_constraintTop_toTopOf="@+id/S1003" />
+            <TextView
+                    android:id="@+id/txtArtist3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ed Sheeran"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/S1003"
+                    app:layout_constraintStart_toStartOf="@+id/txtTitle3" />
 
-    <TextView
-        android:id="@+id/txtArtist3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ed Sheeran"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/S1003"
-        app:layout_constraintStart_toStartOf="@+id/txtTitle3" />
+            <TextView
+                android:id="@+id/txtTitle3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="One"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/S1003"
+                app:layout_constraintTop_toTopOf="@+id/S1003" />
 
-    <ImageButton
-        android:id="@+id/S1004"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="30dp"
-        android:onClick="handleSelection"
-        android:scaleType="centerCrop"
-        app:layout_constraintStart_toStartOf="@+id/S1003"
-        app:layout_constraintTop_toBottomOf="@+id/S1003"
-        app:srcCompat="@drawable/unravel" />
+            <ImageButton
+                    android:id="@+id/S1004"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="30dp"
+                    android:onClick="handleSelection"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintStart_toStartOf="@+id/S1003"
+                    app:layout_constraintTop_toBottomOf="@+id/S1003"
+                    app:srcCompat="@drawable/unravel" />
 
-    <TextView
-        android:id="@+id/txtTitle4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:text="Unravel"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/S1004"
-        app:layout_constraintTop_toTopOf="@+id/S1004" />
+                <TextView
+                    android:id="@+id/txtTitle4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="Unravel"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toEndOf="@+id/S1004"
+                    app:layout_constraintTop_toTopOf="@+id/S1004" />
 
-    <TextView
-        android:id="@+id/txtArtist4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TK from Ling tosite sigure"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/S1004"
-        app:layout_constraintStart_toStartOf="@+id/txtTitle4" />
+                <TextView
+                    android:id="@+id/txtArtist4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TK from Ling tosite sigure"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/S1004"
+                    app:layout_constraintStart_toStartOf="@+id/txtTitle4" />
 
-    <ImageButton
-        android:id="@+id/S1005"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="30dp"
-        android:onClick="handleSelection"
-        android:scaleType="centerCrop"
-        app:layout_constraintStart_toStartOf="@+id/S1004"
-        app:layout_constraintTop_toBottomOf="@+id/S1004"
-        app:srcCompat="@drawable/aimer" />
+                <ImageButton
+                    android:id="@+id/S1005"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="30dp"
+                    android:onClick="handleSelection"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintStart_toStartOf="@+id/S1004"
+                    app:layout_constraintTop_toBottomOf="@+id/S1004"
+                    app:srcCompat="@drawable/aimer" />
 
-    <TextView
-        android:id="@+id/txtTitle5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:text="I beg you"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/S1005"
-        app:layout_constraintTop_toTopOf="@+id/S1005" />
+                <TextView
+                    android:id="@+id/txtTitle5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="I beg you"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toEndOf="@+id/S1005"
+                    app:layout_constraintTop_toTopOf="@+id/S1005" />
 
-    <TextView
-        android:id="@+id/txtArtist5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Aimer"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/S1005"
-        app:layout_constraintStart_toStartOf="@+id/txtTitle5" />
+                <TextView
+                    android:id="@+id/txtArtist5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Aimer"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/S1005"
+                    app:layout_constraintStart_toStartOf="@+id/txtTitle5" />
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
