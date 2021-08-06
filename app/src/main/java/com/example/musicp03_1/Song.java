@@ -6,19 +6,17 @@ public class Song {
     private String id;
     private String title;
     private String artist;
-    private String fileLink;
-    private double songLength;
-    private int drawable;
+    private String fileLInk;
+    private String imageLink;
     public int resid;
 
     //constructor
-    public Song(String id, String title, String artist, String fileLink, double songLength, int drawable) {
+    public Song(String id, String title, String artist, String fileLink, String imageLink) {
         this.id = id;
         this.title = title;
         this.artist = artist;
-        this.fileLink = fileLink;
-        this.songLength = songLength;
-        this.drawable = drawable;
+        this.fileLInk = fileLink;
+        this.imageLink = imageLink;
     }
 
     //getter methods
@@ -35,15 +33,11 @@ public class Song {
     }
 
     public String getFileLink() {
-        return fileLink;
+        return fileLInk;
     }
 
-    public double getSongLength() {
-        return songLength;
-    }
-
-    public int getDrawable() {
-        return drawable;
+    public String getImageLink() {
+        return imageLink;
     }
 
     public int getResid() {

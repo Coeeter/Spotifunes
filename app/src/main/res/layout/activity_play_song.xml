@@ -7,17 +7,96 @@
     tools:context=".PlaySongActivity">
 
     <ImageView
-        android:id="@+id/imgCoverArt"
-        android:layout_width="350dp"
-        android:layout_height="350dp"
-        android:scaleType="centerCrop"
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/background" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.22"
-        app:srcCompat="@drawable/home" />
+        app:srcCompat="@drawable/background" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/background" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/prevcardView"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:layout_marginEnd="10dp"
+        app:cardCornerRadius="40dp"
+        app:cardElevation="30dp"
+        app:layout_constraintEnd_toStartOf="@+id/cardView"
+        app:layout_constraintTop_toTopOf="@+id/cardView">
+
+        <ImageView
+            android:id="@+id/previmgCoverArt"
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:clickable="true"
+            android:onClick="prevImgMusic"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/home" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/nextcardView"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:layout_marginStart="10dp"
+        app:cardCornerRadius="40dp"
+        app:cardElevation="30dp"
+        app:layout_constraintStart_toEndOf="@+id/cardView"
+        app:layout_constraintTop_toTopOf="@+id/cardView">
+
+        <ImageView
+            android:id="@+id/nextimgCoverArt"
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:clickable="true"
+            android:onClick="nextMusic"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/home" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        app:cardCornerRadius="40dp"
+        app:cardElevation="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.475"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.22">
+
+        <ImageView
+            android:id="@+id/imgCoverArt"
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/home" />
+
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/txtSongTitle"
@@ -25,62 +104,48 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Song Title"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/imgCoverArt"
-        app:layout_constraintStart_toStartOf="@+id/imgCoverArt"
-        app:layout_constraintTop_toBottomOf="@+id/imgCoverArt" />
+        android:textAlignment="textStart"
+        android:textColor="#FFFFFF"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="@+id/cardView"
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
     <TextView
         android:id="@+id/txtArtist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
         android:text="Artist"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/txtSongTitle"
-        app:layout_constraintHorizontal_bias="0.493"
+        android:textColor="#B3FFFFFF"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/txtSongTitle"
         app:layout_constraintTop_toBottomOf="@+id/txtSongTitle" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="420dp"
-        android:layout_height="100dp"
-        android:background="#00270B0B"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="@+id/btnPlayPause"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnPlayPause"
-        app:srcCompat="@drawable/bg2" />
 
     <ImageButton
         android:id="@+id/btnPrevious"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginTop="178dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="35dp"
         android:background="#00FFFFFF"
         android:onClick="prevMusic"
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toStartOf="@+id/btnPlayPause"
-        app:layout_constraintTop_toBottomOf="@+id/imgCoverArt"
-        app:srcCompat="@drawable/back_button" />
+        app:layout_constraintTop_toBottomOf="@+id/txtSongTitle"
+        app:srcCompat="@drawable/ic_baseline_skip_previous_24" />
 
     <ImageButton
         android:id="@+id/btnPlayPause"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginTop="178dp"
+        android:layout_marginTop="60dp"
         android:background="#00FFFFFF"
         android:onClick="playOrPauseMusic"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="@+id/btnPrevious"
-        app:layout_constraintEnd_toEndOf="@+id/imgCoverArt"
-        app:layout_constraintStart_toStartOf="@+id/imgCoverArt"
-        app:layout_constraintTop_toBottomOf="@+id/imgCoverArt"
-        app:srcCompat="@drawable/pause_button" />
+        app:layout_constraintEnd_toEndOf="@+id/cardView"
+        app:layout_constraintStart_toStartOf="@+id/cardView"
+        app:layout_constraintTop_toBottomOf="@+id/txtSongTitle"
+        app:srcCompat="@drawable/ic_baseline_pause_24" />
 
     <ImageButton
         android:id="@+id/btnNext"
@@ -93,26 +158,26 @@
         app:layout_constraintBottom_toBottomOf="@+id/btnPrevious"
         app:layout_constraintStart_toEndOf="@+id/btnPlayPause"
         app:layout_constraintTop_toTopOf="@+id/btnPrevious"
-        app:srcCompat="@drawable/next_button" />
+        app:srcCompat="@drawable/ic_baseline_skip_next_24" />
 
     <SeekBar
         android:id="@+id/songSeekBar"
         android:layout_width="290dp"
         android:layout_height="23dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="@+id/imgCoverArt"
-        app:layout_constraintStart_toStartOf="@+id/imgCoverArt"
+        app:layout_constraintEnd_toEndOf="@+id/cardView"
+        app:layout_constraintStart_toStartOf="@+id/cardView"
         app:layout_constraintTop_toBottomOf="@+id/txtSongTitle" />
 
     <SeekBar
         android:id="@+id/volSeekBar"
         android:layout_width="290dp"
         android:layout_height="23dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="110dp"
         android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="@+id/imgCoverArt"
-        app:layout_constraintStart_toStartOf="@+id/imgCoverArt"
+        app:layout_constraintEnd_toEndOf="@+id/cardView"
+        app:layout_constraintStart_toStartOf="@+id/cardView"
         app:layout_constraintTop_toBottomOf="@+id/txtSongTitle" />
 
     <TextView
@@ -120,7 +185,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0:00"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/songSeekBar"
         app:layout_constraintTop_toTopOf="@+id/songSeekBar" />
@@ -130,7 +195,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0:00"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/songSeekBar"
         app:layout_constraintTop_toTopOf="@+id/songSeekBar" />
@@ -146,7 +211,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/btnPrevious"
         app:layout_constraintEnd_toStartOf="@+id/btnPrevious"
         app:layout_constraintTop_toTopOf="@+id/btnPrevious"
-        app:srcCompat="@drawable/shuffle_off" />
+        app:srcCompat="@drawable/ic_baseline_shuffle_24" />
 
     <ImageButton
         android:id="@+id/btnLoop"
@@ -159,13 +224,13 @@
         app:layout_constraintBottom_toBottomOf="@+id/btnNext"
         app:layout_constraintStart_toEndOf="@+id/btnNext"
         app:layout_constraintTop_toTopOf="@+id/btnNext"
-        app:srcCompat="@drawable/loop_off" />
+        app:srcCompat="@drawable/ic_baseline_repeat_24" />
 
     <ImageButton
-        android:id="@+id/imageView2"
+        android:id="@+id/muter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
+        android:background="#00FFFFFF"
         android:onClick="mute"
         app:layout_constraintBottom_toBottomOf="@+id/volSeekBar"
         app:layout_constraintEnd_toStartOf="@+id/volSeekBar"
@@ -185,11 +250,80 @@
         android:layout_height="50dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:background="#FFFFFF"
+        android:background="#00FFFFFF"
         android:onClick="backButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView6"
         app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24" />
+
+    <ImageView
+        android:id="@+id/navigation_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_marginTop="660dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/navigation" />
+
+    <ImageView
+        android:id="@+id/home_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="48dp"
+        android:clickable="true"
+        android:onClick="sendDataToHome"
+        app:layout_constraintBottom_toBottomOf="@+id/navigation_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/navigation_bar"
+        app:srcCompat="@drawable/ic_baseline_home_24" />
+
+    <ImageView
+        android:id="@+id/search_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:clickable="true"
+        android:onClick="sendDataToSearch"
+        app:layout_constraintBottom_toBottomOf="@+id/navigation_bar"
+        app:layout_constraintStart_toEndOf="@+id/home_button"
+        app:layout_constraintTop_toTopOf="@+id/navigation_bar"
+        app:srcCompat="@drawable/ic_baseline_search_24" />
+
+    <ImageView
+        android:id="@+id/favorite_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="48dp"
+        android:clickable="true"
+        android:onClick="sendDataToFav"
+        app:layout_constraintBottom_toBottomOf="@+id/navigation_bar"
+        app:layout_constraintStart_toEndOf="@+id/search_button"
+        app:layout_constraintTop_toTopOf="@+id/navigation_bar"
+        app:srcCompat="@drawable/ic_baseline_favorite_24" />
+
+    <ImageView
+        android:id="@+id/library_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="48dp"
+        android:clickable="true"
+        android:onClick="sendDataToLib"
+        app:layout_constraintBottom_toBottomOf="@+id/navigation_bar"
+        app:layout_constraintStart_toEndOf="@+id/favorite_button"
+        app:layout_constraintTop_toTopOf="@+id/navigation_bar"
+        app:srcCompat="@drawable/ic_baseline_library_music_24" />
+
+    <ImageView
+        android:id="@+id/heart"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:clickable="true"
+        android:onClick="addToFav"
+        app:layout_constraintEnd_toEndOf="@+id/cardView"
+        app:layout_constraintTop_toTopOf="@+id/txtSongTitle"
+        app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

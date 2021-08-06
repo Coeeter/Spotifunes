@@ -5,24 +5,36 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.VolumeProvider;
 import android.media.VolumeShaper;
 import android.os.Bundle;
 import android.os.Handler;
+import android.transition.AutoTransition;
+import android.transition.Explode;
+import android.transition.Slide;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -42,13 +54,14 @@ public class PlaySongActivity extends AppCompatActivity {
     private String title = "";
     private String artist = "";
     private String filelink = "";
-    private int resid;
-    private int drawable;
-    private String id;
+    private String imageLink;
 
     //to play the song
     private MediaPlayer player;
-    private SongCollection songCollection = new SongCollection();
+    private Song song;
+    private ArrayList<Song> songList = new ArrayList<Song>();
+    private final ArrayList<Song> queue = new ArrayList<Song>();
+    private final ArrayList<Song> history = new ArrayList<Song>();
     private int currentIndex = -1;
 
 
@@ -65,28 +78,37 @@ public class PlaySongActivity extends AppCompatActivity {
 
     //for the seekbar
     private SeekBar seekBar;
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler();
     private TextView songEnd;
     private TextView songProgress;
 
     //for the volume seekbar
     private SeekBar volSeekBar;
-    private int audioChange = 0;
+    private int currentPos;
+    private AudioManager audioManager;
 
     //for the mute function
-    private boolean isMute = false;
-    private int currentPos;
+    private boolean isMute;
+    private int posBeforeMute;
+    private ImageView volButton;
+
+    //for fav
+    public static ArrayList<Song> favorites = new ArrayList<Song>();
+    private boolean addfav;
+    private ImageView favButton;
+
+    //to save in local database
+    SharedPreferences sharedPreferences;
 
     public void displaySongBasedOnIndex(int selectedIndex) {
 
         //saving and accessing the properties of the song being played
-        Song song = songCollection.getCurrentSong(selectedIndex);
+        song = songList.get(selectedIndex);
         title = song.getTitle();
         artist = song.getArtist();
         filelink = song.getFileLink();
-        drawable = song.getDrawable();
-        resid = song.getResid();
-        id = song.getId();
+        imageLink = song.getImageLink();
+
 
         //changing title of the song by using id of the song
         TextView txtTitle = findViewById(R.id.txtSongTitle);
@@ -98,43 +120,224 @@ public class PlaySongActivity extends AppCompatActivity {
 
         //changing cover image of the song
         ImageView iCoverArt = findViewById(R.id.imgCoverArt);
-        iCoverArt.setImageResource(drawable);
+        Picasso.with(this).load(imageLink).into(iCoverArt);
+
+        ImageView nextSong = findViewById(R.id.nextimgCoverArt);
+        ImageView prevSong = findViewById(R.id.previmgCoverArt);
+
+        //adding songs to be played to queue
+        for (int i = selectedIndex + 1; i < songList.size(); i++) {
+            queue.add(songList.get(i));
+        }
+
+        //adding songs to history(songs before song selected)
+        for (int i = 0; i <= selectedIndex - 1; i++) {
+            history.add(songList.get(i));
+        }
+
+        if (history.size() == 0){
+            CardView cardView = findViewById(R.id.prevcardView);
+            cardView.setVisibility(View.INVISIBLE);
+        }else{
+            Picasso.with(this).load(songList.get(selectedIndex - 1).getImageLink()).into(prevSong);
+        }
+
+        if(queue.size() == 0){
+            CardView cardView = findViewById(R.id.nextcardView);
+            cardView.setVisibility(View.INVISIBLE);
+        }else{
+            Picasso.with(this).load(songList.get(selectedIndex + 1).getImageLink()).into(nextSong);
+        }
+
+        if(favorites.contains(song)){
+            favButton.setImageResource(R.drawable.ic_baseline_favorite_24);
+            addfav = true;
+        }else{
+            favButton.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+            addfav = false;
+        }
+
+    }
+
+    public void displaySongBasedOnSong(Song songToBePlayed) {
+
+        //saving and accessing the properties of the song being played
+        song = songToBePlayed;
+        title = song.getTitle();
+        artist = song.getArtist();
+        filelink = song.getFileLink();
+        imageLink = song.getImageLink();
+
+
+        //changing title of the song by using id of the song
+        TextView txtTitle = findViewById(R.id.txtSongTitle);
+        txtTitle.setText(title);
+
+        //changing artist
+        TextView txtArtist = findViewById(R.id.txtArtist);
+        txtArtist.setText(artist);
+
+        //changing cover image of the song
+        ImageView iCoverArt = findViewById(R.id.imgCoverArt);
+        Picasso.with(this).load(imageLink).into(iCoverArt);
+
+        ImageView nextSong = findViewById(R.id.nextimgCoverArt);
+
+        ImageView prevSong = findViewById(R.id.previmgCoverArt);
+        CardView prevCardView = findViewById(R.id.prevcardView);
+        CardView nextCardView = findViewById(R.id.nextcardView);
+
+        if (history.size() == 0){
+
+            prevCardView.setVisibility(View.INVISIBLE);
+        }else{
+            prevCardView.setVisibility(View.VISIBLE);
+            Picasso.with(this).load(history.get(history.size()-1).getImageLink()).into(prevSong);
+        }
+
+        if(queue.size() == 0){
+            nextCardView.setVisibility(View.INVISIBLE);
+        }else{
+            nextCardView.setVisibility(View.VISIBLE);
+            Picasso.with(this).load(queue.get(0).getImageLink()).into(nextSong);
+        }
+
+        if(favorites.contains(song)){
+            favButton.setImageResource(R.drawable.ic_baseline_favorite_24);
+            addfav = true;
+        }else{
+            favButton.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+            addfav = false;
+        }
 
     }
 
     public void playSong(String songUrl) {
 
-        //to decide which player to use
-        if (songUrl.equals("")) {
+        try {
 
-            //creating player to play .wav files
-            player = MediaPlayer.create(this, resid);
+            //creating player to play from online source
+            player = new MediaPlayer();
+            player.reset();
+            player.setDataSource(songUrl);
+            player.prepare();
             player.start();
 
             //methods to improve the experience
             updateSeekBar(sBar);
             gracefullyStopWhenMusicEnds();
 
-        } else {
+        } catch (Exception e) {
 
-            try {
-                //creating player to play from online source
-                player = new MediaPlayer();
-                player.reset();
-                player.setDataSource(songUrl);
-                player.prepare();
-                player.start();
-
-                //methods to improve the experience
-                updateSeekBar(sBar);
-                gracefullyStopWhenMusicEnds();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            e.printStackTrace();
 
         }
 
-        setTitle(title);
+    }
+
+    public void gracefullyStopWhenMusicEnds(){
+
+        //checking whether player is over
+        player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+            //what is to happen when song is over
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+
+                if(!shouldLoop){
+
+                    //to make the song loop
+                    playOrPauseMusic(btnPlayPause);
+
+                }else{
+
+                    if (currentIndex == songList.size() - 1) {
+
+                        //set the button to original
+                        btnPlayPause.setImageResource(R.drawable.ic_baseline_play_arrow_24);
+
+                        //back to home screen
+                        onBackPressed();
+
+                    }else{
+
+                        //playing next music when song is over
+                        nextMusic(btnPlayPause);
+
+                    }
+
+                }
+
+            }
+
+        });
+
+    }
+
+    public void nextMusic(View view) {
+
+        //checking index to ensure change is within the array indexes
+        if (queue.size() == 0) {
+
+            player.stop();
+            seekBar.setProgress(seekBar.getMax());
+            btnPlayPause.setImageResource(R.drawable.ic_baseline_play_arrow_24);
+            onBackPressed();
+
+        } else {
+
+            //stoping the player and changing button to pause
+            player.stop();
+            btnPlayPause.setImageResource(R.drawable.ic_baseline_pause_24);
+
+            //adding song which was playing just now to history
+            history.add(song);
+
+            //displaying and playing song while removing the first song of queue
+            displaySongBasedOnSong(queue.remove(0));
+            playSong(filelink);
+
+            /*Log.d("poly","queue: " + queue.size() + "");
+            Log.d("poly","history: " + history.size() + "");*/
+
+        }
+
+    }
+
+    public void prevImgMusic(View view){
+
+        //displaying and playing song while removing the first song of queue
+        player.stop();
+        btnPlayPause.setImageResource(R.drawable.ic_baseline_pause_24);
+        queue.add(0,song);
+        displaySongBasedOnSong(history.remove(history.size() - 1));
+        playSong(filelink);
+
+    }
+
+    public void prevMusic(View view) {
+
+        if(player.getCurrentPosition() > 5000 || history.size() == 0){
+
+            //resetting the song playing
+            player.seekTo(0);
+
+        }else{
+
+            //displaying and playing song while removing the first song of queue
+            player.stop();
+            btnPlayPause.setImageResource(R.drawable.ic_baseline_pause_24);
+            queue.add(0,song);
+            displaySongBasedOnSong(history.remove(history.size() - 1));
+            playSong(filelink);
+
+            /*Log.d("poly","queue: " + queue.size() + "");
+            Log.d("poly","history: " + history.size() + "");*/
+
+
+
+        }
+
     }
 
     @Override
@@ -142,27 +345,18 @@ public class PlaySongActivity extends AppCompatActivity {
 
         super.onBackPressed();
 
+
         //to ensure the player stops and resets everything to ensure no app crash
         handler.removeCallbacks(sBar);
         player.stop();
 
-        //to remember the audio settings
-        currentPos = volSeekBar.getProgress();
-
     }
 
     public void backButton(View view){
-        onBackPressed();
-    }
 
-    public void mute(View view){
-        if (!isMute) {
-            currentPos = volSeekBar.getProgress();
-            volSeekBar.setProgress(0);
-        }else{
-            volSeekBar.setProgress(currentPos);
-        }
-        isMute = !isMute;
+        //we can use onBackPressed as it it the same method
+        onBackPressed();
+
     }
 
     public void playOrPauseMusic(View view) {
@@ -173,147 +367,88 @@ public class PlaySongActivity extends AppCompatActivity {
             player.pause();
 
             //changing text on the button
-            btnPlayPause.setImageResource(R.drawable.play_button);
+            btnPlayPause.setImageResource(R.drawable.ic_baseline_play_arrow_24);
 
         } else if (!player.isPlaying()) {
 
             player.start();
 
             //changing text on the button
-            btnPlayPause.setImageResource(R.drawable.pause_button);
+            btnPlayPause.setImageResource(R.drawable.ic_baseline_pause_24);
 
         }
-    }
-
-    public void nextMusic(View view) {
-
-        //checking index to ensure change is within the array indexes
-        if (currentIndex == songCollection.getSongs().length - 1) {
-
-            player.seekTo(player.getDuration());
-            seekBar.setProgress(player.getDuration());
-            btnPlayPause.setImageResource(R.drawable.play_button);
-            onBackPressed();
-
-        } else {
-
-            currentIndex++;
-
-        }
-
-        //playing the next song with the new index and updating the button
-        player.stop();
-        btnPlayPause.setImageResource(R.drawable.pause_button);
-        displaySongBasedOnIndex(currentIndex);
-        playSong(filelink);
-
-    }
-
-    public void prevMusic(View view) {
-
-        if(player.getCurrentPosition() > 5000){
-
-            //resetting the song playing
-            player.seekTo(0);
-
-        }else{
-
-            //checking index to ensure change is within array indexes
-            if (!(currentIndex == 0)){
-
-                currentIndex--;
-
-            }
-
-            //playing the previous song with the new index and updating the button
-            player.stop();
-            btnPlayPause.setImageResource(R.drawable.pause_button);
-            displaySongBasedOnIndex(currentIndex);
-            playSong(filelink);
-
-        }
-
-    }
-
-    public void gracefullyStopWhenMusicEnds(){
-
-        //checking whether player is over
-        player.setOnCompletionListener(
-
-                new MediaPlayer.OnCompletionListener() {
-
-                    //what is to happen when song is over
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-
-                        if(!shouldLoop){
-
-                            //to make the song loop
-                            playOrPauseMusic(btnPlayPause);
-
-                        }else{
-
-                            if (currentIndex == songCollection.getSongs().length - 1) {
-
-                                //set the button to original
-                                btnPlayPause.setImageResource(R.drawable.play_button);
-
-                                //back to home screen
-                                onBackPressed();
-
-                            }else{
-
-                                //playing next music when song is over
-                                nextMusic(btnPlayPause);
-
-                            }
-
-                        }
-
-                    }
-
-                }
-
-        );
-
     }
 
     public void shuffleSong(View view){
-        //Creating list to shuffle it
-        List<Song> shuffleList = new ArrayList<>(Arrays.asList(songCollection.songs));
+
+        //creating arraylist to be shuffled
+        ArrayList<Song> shuffleList = new ArrayList<Song>();
+        shuffleList.addAll(songList);
+        shuffleList.remove(song);
 
         if(shouldShuffle){
 
             //changing the button to show change
-            btnShuffle.setImageResource(R.drawable.shuffle_on);
+            btnShuffle.setImageResource(R.drawable.ic_baseline_shuffle_on_24);
 
             //making the list all shuffled up
-            Collections.shuffle(shuffleList);
+            for (int i = 0; i < shuffleList.size(); i++) {
 
-            //finding index of the current song
-            int firstValIndex = shuffleList.indexOf(songCollection.getCurrentSong(currentIndex));
+                //making random index
+                int index = (int) (Math.random() * shuffleList.size());
 
-            //finding first element
-            Song songInFirstIndex = shuffleList.get(0);
+                //holding the song going to be replaced in a temporary variable
+                Song tempHolder = shuffleList.get(i);
 
-            //making the current song to be the first element
-            shuffleList.set(0, shuffleList.get(firstValIndex));
+                //replacing the song in index to song in i'
+                shuffleList.set(i,shuffleList.get(index));
 
-            //making originally first element take over old pos of current song
-            shuffleList.set(firstValIndex, songInFirstIndex);
+                //replacing the duplicate song with the song which was replaced
+                shuffleList.set(index, tempHolder);
 
-            //making list into array and updating the currentIndex
-            shuffleList.toArray(songCollection.songs);
-            currentIndex = 0;
+            }
+
+            //clearing queue and history
+            queue.clear();
+            history.clear();
+
+            //adding the elements of shuffleList to queue
+            queue.addAll(shuffleList);
+
+            //to change the display for next and prev song
+            displaySongBasedOnSong(song);
+
+            /*for (int i = 0; i < queue.size(); i++) {
+                Log.d("poly", queue.get(i).getTitle());
+            }
+
+            Log.d("poly","queue: " + queue.size() + "");*/
 
         }else{
 
             //changing the button imagej
-            btnShuffle.setImageResource(R.drawable.shuffle_off);
+            btnShuffle.setImageResource(R.drawable.ic_baseline_shuffle_24);
 
+            //changing the queue to normal
+            queue.clear();
+            for (int i = songList.indexOf(song) + 1; i < songList.size(); i++) {
+                queue.add(songList.get(i));
+            }
 
-            //making the array the same again
-            songCollection = new SongCollection();
+            //changing the history to normal
+            history.clear();
+            for (int i = 0; i < songList.indexOf(song); i++) {
+                history.add(songList.get(i));
+            }
+
+            //to change the display for next and prev song
+            displaySongBasedOnSong(song);
+
+            /*for (int i = 0; i < queue.size(); i++) {
+                Log.d("poly", queue.get(i).getTitle());
+            }
+
+            Log.d("poly","queue: " + queue.size() + "");*/
 
         }
 
@@ -328,12 +463,12 @@ public class PlaySongActivity extends AppCompatActivity {
         if (shouldLoop) {
 
             //changing button
-            btnLoop.setImageResource(R.drawable.loop_on);
+            btnLoop.setImageResource(R.drawable.ic_baseline_repeat_on_24);
 
         }else{
 
             //changing button to original
-            btnLoop.setImageResource(R.drawable.loop_off);
+            btnLoop.setImageResource(R.drawable.ic_baseline_repeat_24);
 
         }
 
@@ -351,7 +486,7 @@ public class PlaySongActivity extends AppCompatActivity {
 
     }
 
-    private Runnable sBar = new Runnable() {
+    private final Runnable sBar = new Runnable() {
 
         //updating the run() method to suit the app
         @Override
@@ -402,16 +537,63 @@ public class PlaySongActivity extends AppCompatActivity {
         }
 
         return time;
+
+    }
+
+    public void songSeekBar(){
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+                //checking player is active
+                if (player != null) {
+
+                    //setting the change in progress to the player
+                    player.seekTo(seekBar.getProgress());
+
+                }
+
+            }
+
+        });
+
     }
 
     public void audioSeekBar(){
-        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+        //creating audiomanager object which takes in audio service as a parameter
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+        //setting up the seekbar
         volSeekBar.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
+
         volSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
                 isMute = false;
+                volButton.setImageResource(R.drawable.ic_baseline_volume_mute_24);
+
+                //changing audio with respect to change in seekbar
                 audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
+
+                //saving the audio using sharedpreferences
+                currentPos = progress;
+                saveToSharedPreferences(currentPos,"audio");
+
             }
 
             @Override
@@ -423,14 +605,123 @@ public class PlaySongActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
 
             }
+
         });
 
-        if(audioChange == 0){
-            volSeekBar.setProgress(volSeekBar.getMax());
-            audioChange++;
-        }else{
+        //making sure we can have a default seekbar position
+        if(currentPos != -1){
+
+            //making sure we set the audio as what we changed to before
             volSeekBar.setProgress(currentPos);
+
+        }else{
+
+            //setting our default position
+            volSeekBar.setProgress(volSeekBar.getMax());
+
         }
+    }
+
+    public void mute(View view){
+        //checking which toggle function to use
+        if (!isMute) {
+
+            volButton.setImageResource(R.drawable.ic_baseline_volume_off_24);
+            posBeforeMute = volSeekBar.getProgress();
+            /*volSeekBar.setProgress(0);*/
+            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,0,0);
+
+        }else{
+
+            volButton.setImageResource(R.drawable.ic_baseline_volume_mute_24);
+            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,volSeekBar.getProgress(),0);
+
+        }
+
+        isMute = !isMute;
+        saveToSharedPreferences(posBeforeMute, "audioBefMute");
+        saveToSharedPreferences(isMute,"toMute");
+        Log.d("poly", isMute + "");
+
+    }
+
+    public void addToFav(View view) {
+
+        if (!addfav){
+
+            favButton.setImageResource(R.drawable.ic_baseline_favorite_24);
+            favorites.add(song);
+
+        }else{
+
+            favButton.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+            favorites.remove(song);
+
+        }
+
+        addfav = !addfav;
+
+    }
+
+    public void saveToSharedPreferences(int toBeSaved, String key){
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(key,toBeSaved);
+        editor.apply();
+
+    }
+
+    public void saveToSharedPreferences(boolean toBeSaved, String key){
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(key,toBeSaved);
+        editor.apply();
+
+    }
+
+    public void saveToSharedPreferences(String toBeSaved, String key){
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(key,toBeSaved);
+        editor.apply();
+
+    }
+
+    public void sendDataToHome(View view){
+
+        //to ensure the player stops and resets everything to ensure no app crash
+        handler.removeCallbacks(sBar);
+        player.stop();
+        Intent intent = new Intent(this,HomePageActivity.class);
+        startActivity(intent);
+
+    }
+
+    public void sendDataToSearch(View view){
+
+        handler.removeCallbacks(sBar);
+        player.stop();
+        Intent intent = new Intent(this,SearchPageActivity.class);
+        startActivity(intent);
+
+    }
+
+    public void sendDataToFav(View view){
+
+        handler.removeCallbacks(sBar);
+        player.stop();
+        Intent intent = new Intent(this,FavPageActivity.class);
+        startActivity(intent);
+
+    }
+
+    public void sendDataToLib(View view){
+
+        handler.removeCallbacks(sBar);
+        player.stop();
+        Intent intent = new Intent(this,LibPageActivity.class);
+        startActivity(intent);
+
     }
 
     @Override
@@ -440,10 +731,23 @@ public class PlaySongActivity extends AppCompatActivity {
         setContentView(R.layout.activity_play_song);
         getSupportActionBar().hide();
 
-        //getting the index in array from main activity
+
+        //getting the index in array from home page activity
         Bundle songData = this.getIntent().getExtras();
         currentIndex = songData.getInt("index");
-        Log.d("poly", "The index of the array is " + currentIndex);
+
+        //getting the songList
+        Gson gson = new Gson();
+        TypeToken<ArrayList<Song>> token = new TypeToken<ArrayList<Song>>(){};
+        songList.addAll(gson.fromJson(songData.getString("songList"),token.getType()));
+
+        //setting sharedpreferences settings
+        sharedPreferences = getSharedPreferences("memory", MODE_PRIVATE);
+
+        //getting data from sharedPreferences
+        currentPos = sharedPreferences.getInt("audio", -1);
+        posBeforeMute = sharedPreferences.getInt("audioBefMute",-1);
+        isMute = sharedPreferences.getBoolean("toMute",false);
 
         //updating the variables with the widget they are supposed to be
         btnPlayPause = findViewById(R.id.btnPlayPause);
@@ -453,46 +757,18 @@ public class PlaySongActivity extends AppCompatActivity {
         btnShuffle = findViewById(R.id.btnShuffle);
         btnLoop = findViewById(R.id.btnLoop);
         volSeekBar = findViewById(R.id.volSeekBar);
+        volButton = findViewById(R.id.muter);
+        favButton = findViewById(R.id.heart);
 
         //activating the methods to play the song and update the display
         displaySongBasedOnIndex(currentIndex);
         playSong(filelink);
 
-        //creating method to be able to drag the volume seekbar
+        //executing method to be able to drag the volume seekbar
         audioSeekBar();
         
         //creating method to be able to drag the seekbar
-        seekBar.setOnSeekBarChangeListener(
-
-                new SeekBar.OnSeekBarChangeListener() {
-
-                    @Override
-                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-                    }
-
-                    @Override
-                    public void onStartTrackingTouch(SeekBar seekBar) {
-
-                    }
-
-                    @Override
-                    public void onStopTrackingTouch(SeekBar seekBar) {
-
-                        //checking player is active
-                        if (player != null) {
-
-                            //setting the change in progress to the player
-                            player.seekTo(seekBar.getProgress());
-
-                        }
-
-                    }
-
-                }
-
-        );
-
+        songSeekBar();
 
     }
 
