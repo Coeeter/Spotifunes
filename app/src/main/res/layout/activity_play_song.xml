@@ -260,11 +260,11 @@
         android:id="@+id/navigation_bar"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
-        android:layout_marginTop="660dp"
+        android:scaleType="center"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/navigation" />
 
     <ImageView
@@ -301,7 +301,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/navigation_bar"
         app:layout_constraintStart_toEndOf="@+id/search_button"
         app:layout_constraintTop_toTopOf="@+id/navigation_bar"
-        app:srcCompat="@drawable/ic_baseline_favorite_24" />
+        app:srcCompat="@drawable/ic_baseline_favorite_24_off" />
 
     <ImageView
         android:id="@+id/library_button"
@@ -324,6 +324,18 @@
         app:layout_constraintEnd_toEndOf="@+id/cardView"
         app:layout_constraintTop_toTopOf="@+id/txtSongTitle"
         app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
+
+    <TextView
+        android:id="@+id/nameOfList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="#FFFFFF"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageButton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

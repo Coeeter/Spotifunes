@@ -42,11 +42,11 @@
         android:id="@+id/navigation_bar3"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
-        android:layout_marginTop="660dp"
+        android:scaleType="center"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/navigation" />
 
     <ImageView
@@ -109,8 +109,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/searchList"
         android:layout_width="match_parent"
-        android:layout_height="570dp"
-        android:layout_marginTop="90dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/navigation_bar3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -119,7 +120,7 @@
         android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -129,6 +130,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:text="Search"
         android:textColor="@color/white"
         android:textSize="30sp"

@@ -2,12 +2,9 @@ package com.example.musicp03_1;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,18 +14,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class FavSongAdapter extends RecyclerView.Adapter<ForSongList> {
+public class PlaylistSongAdapter extends RecyclerView.Adapter<ForSongList> {
 
     //creating the attributes
     private Context context;
-    private List<Song> songList;
+    private String layoutStyle;
+    private final List<Playlist> listOfPlaylist;
 
     //adding constructor to update attribute values
-    public FavSongAdapter(List<Song> songs) {
-        this.songList = songs;
+    public PlaylistSongAdapter(List<Playlist> songs, String layoutStyle) {
+
+        this.listOfPlaylist = songs;
+        this.layoutStyle = layoutStyle;
 
     }
 
@@ -41,7 +40,19 @@ public class FavSongAdapter extends RecyclerView.Adapter<ForSongList> {
 
         //creating the layout for the recycleview
         LayoutInflater inflater = LayoutInflater.from(context);
-        View songView = inflater.inflate(R.layout.item_layout,parent,false);
+        View songView;
+
+        //checking which layout to use
+        if(layoutStyle.equals("home")){
+
+            songView = inflater.inflate(R.layout.playlist_item_layout_home,parent,false);
+
+        }else{
+
+            songView = inflater.inflate(R.layout.playlist_item_layout,parent,false);
+
+        }
+
         return new ForSongList(songView);
 
     }
@@ -50,35 +61,43 @@ public class FavSongAdapter extends RecyclerView.Adapter<ForSongList> {
     public void onBindViewHolder(@NonNull ForSongList holder, int position) {
 
         //making sure we editing correct position with correct song
-        Song song = songList.get(position);
+        Playlist playlist = listOfPlaylist.get(position);
 
         //changing the views 'settings'
         TextView songArtist = holder.songArtist;
-        songArtist.setText(song.getArtist());
-
-        TextView songTitle = holder.songTitle;
-        songTitle.setText(song.getTitle());
+        songArtist.setText(playlist.playlist.size() + " songs");
 
         ImageView songCover = holder.songCover;
-        Picasso.with(context).load(song.getImageLink()).into(songCover);
+        Picasso.with(context).load(playlist.imageLink).into(songCover);
+
+        TextView songTitle = holder.songTitle;
+
+        //ensuring our name is not too long
+        if(playlist.name.length() > 7 && layoutStyle.equals("home")){
+
+            songTitle.setText(playlist.name.substring(0,8) + "...");
+
+        }else{
+
+            songTitle.setText(playlist.name);
+
+        }
 
         //method to execute when the image is clicked
         songCover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Gson gson = new Gson();
-                String listToBeSent = gson.toJson(songList);
-
                 //creating intent
-                Intent intent = new Intent(context, PlaySongActivity.class);
+                Intent intent = new Intent(context, PlaylistActivity.class);
+                Gson gson = new Gson();
 
-                //passing in some data to our next activity
-                intent.putExtra("name","Favorites");
-                intent.putExtra("index",position);
-                intent.putExtra("songList", listToBeSent);
+                //passing in datat
+                intent.putExtra("name", playlist.name);
+                intent.putExtra("index", position);
+                intent.putExtra("listOfSong", gson.toJson(listOfPlaylist));
 
-                //starting the activity
+                //starting activity
                 context.startActivity(intent);
 
             }
@@ -88,7 +107,7 @@ public class FavSongAdapter extends RecyclerView.Adapter<ForSongList> {
 
     @Override
     public int getItemCount() {
-        return songList.size();
+        return listOfPlaylist.size();
     }
 
 }

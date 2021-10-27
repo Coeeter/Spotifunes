@@ -1,9 +1,6 @@
 package com.example.musicp03_1;
 
-import androidx.annotation.LongDef;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -12,40 +9,20 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.VolumeProvider;
-import android.media.VolumeShaper;
 import android.os.Bundle;
 import android.os.Handler;
-import android.transition.AutoTransition;
-import android.transition.Explode;
-import android.transition.Slide;
 import android.util.Log;
-import android.view.DragEvent;
-import android.view.GestureDetector;
-import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 
 public class PlaySongActivity extends AppCompatActivity {
@@ -59,10 +36,11 @@ public class PlaySongActivity extends AppCompatActivity {
     //to play the song
     private MediaPlayer player;
     private Song song;
-    private ArrayList<Song> songList = new ArrayList<Song>();
+    public final ArrayList<Song> songList = new ArrayList<Song>();
     private final ArrayList<Song> queue = new ArrayList<Song>();
     private final ArrayList<Song> history = new ArrayList<Song>();
     private int currentIndex = -1;
+    private TextView nameOfList;
 
 
     //for th buttons
@@ -97,8 +75,8 @@ public class PlaySongActivity extends AppCompatActivity {
     private boolean addfav;
     private ImageView favButton;
 
-    //to save in local database
-    SharedPreferences sharedPreferences;
+    //to save in device
+    private SharedPreferences sharedPreferences;
 
     public void displaySongBasedOnIndex(int selectedIndex) {
 
@@ -122,39 +100,57 @@ public class PlaySongActivity extends AppCompatActivity {
         ImageView iCoverArt = findViewById(R.id.imgCoverArt);
         Picasso.with(this).load(imageLink).into(iCoverArt);
 
+        //setting our ui
         ImageView nextSong = findViewById(R.id.nextimgCoverArt);
         ImageView prevSong = findViewById(R.id.previmgCoverArt);
 
         //adding songs to be played to queue
         for (int i = selectedIndex + 1; i < songList.size(); i++) {
+
             queue.add(songList.get(i));
+
         }
 
         //adding songs to history(songs before song selected)
         for (int i = 0; i <= selectedIndex - 1; i++) {
+
             history.add(songList.get(i));
+
         }
 
+        //checking if it should be visible
         if (history.size() == 0){
+
             CardView cardView = findViewById(R.id.prevcardView);
             cardView.setVisibility(View.INVISIBLE);
+
         }else{
+
             Picasso.with(this).load(songList.get(selectedIndex - 1).getImageLink()).into(prevSong);
+
         }
 
         if(queue.size() == 0){
+
             CardView cardView = findViewById(R.id.nextcardView);
             cardView.setVisibility(View.INVISIBLE);
+
         }else{
+
             Picasso.with(this).load(songList.get(selectedIndex + 1).getImageLink()).into(nextSong);
+
         }
 
-        if(favorites.contains(song)){
+        if(song.isFav()){
+
             favButton.setImageResource(R.drawable.ic_baseline_favorite_24);
             addfav = true;
+
         }else{
+
             favButton.setImageResource(R.drawable.ic_baseline_favorite_border_24);
             addfav = false;
+
         }
 
     }
@@ -190,24 +186,35 @@ public class PlaySongActivity extends AppCompatActivity {
         if (history.size() == 0){
 
             prevCardView.setVisibility(View.INVISIBLE);
+
         }else{
+
             prevCardView.setVisibility(View.VISIBLE);
             Picasso.with(this).load(history.get(history.size()-1).getImageLink()).into(prevSong);
+
         }
 
         if(queue.size() == 0){
+
             nextCardView.setVisibility(View.INVISIBLE);
+
         }else{
+
             nextCardView.setVisibility(View.VISIBLE);
             Picasso.with(this).load(queue.get(0).getImageLink()).into(nextSong);
+
         }
 
-        if(favorites.contains(song)){
+        if(song.isFav()){
+
             favButton.setImageResource(R.drawable.ic_baseline_favorite_24);
             addfav = true;
+
         }else{
+
             favButton.setImageResource(R.drawable.ic_baseline_favorite_border_24);
             addfav = false;
+
         }
 
     }
@@ -626,40 +633,62 @@ public class PlaySongActivity extends AppCompatActivity {
         //checking which toggle function to use
         if (!isMute) {
 
+            //setting our image
             volButton.setImageResource(R.drawable.ic_baseline_volume_off_24);
+
+            //saving our progress
             posBeforeMute = volSeekBar.getProgress();
             /*volSeekBar.setProgress(0);*/
+
+            //muting our audio
             audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,0,0);
 
         }else{
 
+            //changing our image
             volButton.setImageResource(R.drawable.ic_baseline_volume_mute_24);
+
+            //making our audio not mute
             audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,volSeekBar.getProgress(),0);
 
         }
 
+        //ensure we can toggle again
         isMute = !isMute;
+
+        //saving to sharedpref
         saveToSharedPreferences(posBeforeMute, "audioBefMute");
         saveToSharedPreferences(isMute,"toMute");
-        Log.d("poly", isMute + "");
 
     }
 
     public void addToFav(View view) {
 
+        //ensuring we can toggle
         if (!addfav){
 
             favButton.setImageResource(R.drawable.ic_baseline_favorite_24);
-            favorites.add(song);
+            int index = songList.indexOf(song);
+            songList.get(index).setFav(true);
+            favorites.add(songList.get(index));
 
         }else{
 
             favButton.setImageResource(R.drawable.ic_baseline_favorite_border_24);
-            favorites.remove(song);
+            int index = songList.indexOf(song);
+            songList.get(index).setFav(false);
+            favorites.remove(songList.get(index));
 
         }
 
         addfav = !addfav;
+        Gson gson = new Gson();
+        String songListToSend = gson.toJson(HomePageActivity.songList);
+        String dataToBeSent = gson.toJson(favorites);
+
+        //saving to shared pref
+        saveToSharedPreferences(dataToBeSent,"favList");
+        saveToSharedPreferences(songListToSend,"songList");
 
     }
 
@@ -720,6 +749,7 @@ public class PlaySongActivity extends AppCompatActivity {
         handler.removeCallbacks(sBar);
         player.stop();
         Intent intent = new Intent(this,LibPageActivity.class);
+        intent.putExtra("playlist", "");
         startActivity(intent);
 
     }
@@ -736,10 +766,16 @@ public class PlaySongActivity extends AppCompatActivity {
         Bundle songData = this.getIntent().getExtras();
         currentIndex = songData.getInt("index");
 
+        String name = songData.getString("name");
+
         //getting the songList
         Gson gson = new Gson();
         TypeToken<ArrayList<Song>> token = new TypeToken<ArrayList<Song>>(){};
         songList.addAll(gson.fromJson(songData.getString("songList"),token.getType()));
+        for (int i = 0; i < songList.size(); i++) {
+            Log.d("poly", songList.get(i).getTitle());
+        }
+        //songList.addAll(HomePageActivity.songList);
 
         //setting sharedpreferences settings
         sharedPreferences = getSharedPreferences("memory", MODE_PRIVATE);
@@ -759,10 +795,12 @@ public class PlaySongActivity extends AppCompatActivity {
         volSeekBar = findViewById(R.id.volSeekBar);
         volButton = findViewById(R.id.muter);
         favButton = findViewById(R.id.heart);
+        nameOfList = findViewById(R.id.nameOfList);
 
         //activating the methods to play the song and update the display
         displaySongBasedOnIndex(currentIndex);
         playSong(filelink);
+        nameOfList.setText(name);
 
         //executing method to be able to drag the volume seekbar
         audioSeekBar();

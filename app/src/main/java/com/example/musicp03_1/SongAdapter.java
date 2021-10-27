@@ -27,11 +27,15 @@ public class SongAdapter extends RecyclerView.Adapter<ForSongList> implements Fi
     private Context context;
     private List<Song> songList;
     private List<Song> filteredSongList;
+    private String name;
+    private String layoutStyle;
 
     //adding constructor to update attribute values
-    public SongAdapter(List<Song> songs) {
+    public SongAdapter(List<Song> songs, String name, String layoutStyle) {
         this.songList = songs;
         this.filteredSongList = songs;
+        this.name = name;
+        this.layoutStyle = layoutStyle;
         /*songList.addAll(songs);
         filteredSongList.addAll(songs);*/
 
@@ -46,7 +50,19 @@ public class SongAdapter extends RecyclerView.Adapter<ForSongList> implements Fi
 
         //creating the layout for the recycleview
         LayoutInflater inflater = LayoutInflater.from(context);
-        View songView = inflater.inflate(R.layout.item_layout,parent,false);
+
+        //checking which view to use
+        View songView;
+        if(layoutStyle.equals("popular")){
+
+            songView = inflater.inflate(R.layout.item_layout_popular,parent,false);
+
+        }else{
+
+            songView = inflater.inflate(R.layout.item_layout,parent,false);
+
+        }
+
         return new ForSongList(songView);
 
     }
@@ -79,6 +95,7 @@ public class SongAdapter extends RecyclerView.Adapter<ForSongList> implements Fi
                 Intent intent = new Intent(context, PlaySongActivity.class);
 
                 //passing in some data to our next activity
+                intent.putExtra("name",name);
                 intent.putExtra("index",position);
                 intent.putExtra("songList", listToBeSent);
 
@@ -102,30 +119,38 @@ public class SongAdapter extends RecyclerView.Adapter<ForSongList> implements Fi
 
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
+
+                //converting our input to string
                 String charString = constraint.toString();
+
+                //checking the values of the input
                 if(charString.isEmpty()){
 
-                    /*filteredSongList = songList;*/
+                    //our default
                     filteredSongList = songList;
 
                 }else{
 
+                    //filtering our values
                     List<Song> filteredList = new ArrayList<Song>();
                     for (int i = 0; i < songList.size(); i++) {
                         if (songList.get(i).getTitle().toLowerCase().contains(charString.toLowerCase()) || songList.get(i).getArtist().toLowerCase().contains(charString.toLowerCase())){
-                            Log.d("poly", constraint.toString().toLowerCase());
+                            //Log.d("poly", constraint.toString().toLowerCase());
                             filteredList.add(songList.get(i));
                         }
                     }
 
+                    //saving our values to a var
                     filteredSongList = filteredList;
 
                 }
 
+/*
                 for (int i = 0; i < filteredSongList.size(); i++) {
                     Log.d("poly", filteredSongList.get(i).getTitle());
                 }
-
+*/
+                //ensure we can use the values in publishresults method
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = filteredSongList;
 
@@ -138,6 +163,7 @@ public class SongAdapter extends RecyclerView.Adapter<ForSongList> implements Fi
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
 
+                //to show the results
                 filteredSongList = (List<Song>) results.values;
                 notifyDataSetChanged();
 

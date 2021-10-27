@@ -40,11 +40,11 @@
         android:id="@+id/navigation_bar5"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
-        android:layout_marginTop="660dp"
+        android:scaleType="center"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/navigation" />
 
     <ImageView
@@ -57,7 +57,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/navigation_bar5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/navigation_bar5"
-        app:srcCompat="@drawable/ic_baseline_home_on_24" />
+        app:srcCompat="@drawable/ic_baseline_home_24" />
 
     <ImageView
         android:id="@+id/library_button5"
@@ -108,8 +108,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/favList"
         android:layout_width="match_parent"
-        android:layout_height="610dp"
+        android:layout_height="0dp"
         android:layout_marginTop="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView14"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -119,11 +120,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:text="Favorites"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:onClick="clearAll"
+        app:layout_constraintBottom_toTopOf="@+id/navigation_bar5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_baseline_delete_24" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

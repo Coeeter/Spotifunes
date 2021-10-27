@@ -9,6 +9,7 @@ public class Song {
     private String fileLInk;
     private String imageLink;
     public int resid;
+    private boolean fav;
 
     //constructor
     public Song(String id, String title, String artist, String fileLink, String imageLink) {
@@ -45,5 +46,13 @@ public class Song {
             return resid;
         }
         return -1;
+    }
+
+    public boolean isFav() {
+        return fav;
+    }
+
+    public void setFav(boolean fav) {
+        this.fav = fav;
     }
 }

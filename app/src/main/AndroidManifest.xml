@@ -12,9 +12,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MusicP03_1">
-        <activity android:name=".LibPageActivity"></activity>
+        <activity android:name=".PlaylistActivity"></activity>
+        <activity android:name=".PlaylistLibPageActivity"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity android:name=".LibPageActivity" />
         <activity android:name=".FavPageActivity" />
-        <activity android:name=".SearchPageActivity" />
+        <activity android:name=".SearchPageActivity"
+            android:windowSoftInputMode="adjustNothing" />
         <activity android:name=".HomePageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

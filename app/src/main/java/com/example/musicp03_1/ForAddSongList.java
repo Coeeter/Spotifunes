@@ -1,5 +1,6 @@
 package com.example.musicp03_1;
 
+import android.media.Image;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -7,14 +8,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ForSongList extends RecyclerView.ViewHolder{
+public class ForAddSongList extends RecyclerView.ViewHolder{
 
     //creating variables to use the views
     public TextView songTitle;
     public TextView songArtist;
     public ImageView songCover;
+    public ImageView addToPlayList;
 
-    public ForSongList(@NonNull View itemView) {
+    public ForAddSongList(@NonNull View itemView) {
 
         super(itemView);
 
@@ -22,6 +24,7 @@ public class ForSongList extends RecyclerView.ViewHolder{
         songTitle = itemView.findViewById(R.id.playlistName);
         songArtist = itemView.findViewById(R.id.numberSongs);
         songCover = itemView.findViewById(R.id.songCover);
+        addToPlayList = itemView.findViewById(R.id.addPlaylist);
 
     }
 }
